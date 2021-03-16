@@ -10,10 +10,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class MessageMapperTest {
     @Test
-    void model_to_entity() {
+    void model_to_entity() { //TODO: Refactor test method name
         //Given
         MessageMapper messageMapper = new MessageMapper();
         MessageModel messageModel = new MessageModel();
+
+        //TODO: Refactor - Autowired
 
         messageModel.setId("1");
         messageModel.setContent("Message Entity");
@@ -30,10 +32,12 @@ class MessageMapperTest {
     }
 
     @Test
-    void entity_to_model() {
+    void entity_to_model() { //TODO: Refactor test method name
         //Given
         MessageMapper messageMapper = new MessageMapper();
         MessageEntity messageEntity = new MessageEntity();
+
+        //TODO: Refactor - Autowired
 
         messageEntity.setId("1");
         messageEntity.setContent("Message Model");

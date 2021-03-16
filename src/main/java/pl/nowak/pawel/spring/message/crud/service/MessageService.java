@@ -49,7 +49,7 @@ public class MessageService {
         return modelList;
     }
 
-    //cerate
+    //create
     public MessageModel create(MessageModel messageModel) {
         logger.info("(MessageService::create)   ====>   Create MessageEntity object");
 
@@ -85,6 +85,10 @@ public class MessageService {
                 .findFirst()
                 .orElseThrow(() -> new MessageNotFoundException("Message with id " + id + " not exist!"));
         messageEntity.setContent(messageModel.getContent());
+        messageRepository.save(messageEntity);
+
+        //TODO: create DAO layer
+
 
         MessageModel model = messageMapper.from(messageEntity);
         logger.info("(MessageService::update)    ====>    Updated message = " + model);

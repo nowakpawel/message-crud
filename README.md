@@ -19,4 +19,5 @@ Simple CRUD application which allows to manage messages.
 ---
 ## TODO List:
 -[ ] Finish validation implementation for create and update methods in MessageController class
+
 -[ ] Write tests for Web Layer

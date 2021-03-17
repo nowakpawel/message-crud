@@ -1,12 +1,19 @@
 package pl.nowak.pawel.spring.message.crud.web;
 
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import pl.nowak.pawel.spring.message.crud.exception.MessageNotFoundException;
 import pl.nowak.pawel.spring.message.crud.service.MessageService;
 import pl.nowak.pawel.spring.message.crud.web.model.MessageModel;
 
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 @RestController
@@ -30,6 +37,7 @@ public class MessageController {
         }
 
         logger.info("(MessageController::create)    ====>   Returned message = " + messageModel);
+        
         return messageModel;
     }
 
@@ -39,29 +47,33 @@ public class MessageController {
 
         List<MessageModel> list = messageService.list();
 
-        logger.info("(MessageController::readAllMessages)   ====>   list = "+ list);
+        logger.info("(MessageController::readAllMessages)   ====>   list = " + list);
+
         return list;
     }
 
     @PutMapping("/{id}")
-    //public MessageModel update(@PathVariable String id) throws MessageNotFoundException {
-    public MessageModel update(@PathVariable String id, @RequestBody MessageModel messageModel) throws MessageNotFoundException {
+    public ResponseEntity<String> update(@PathVariable String id, @Valid @RequestBody MessageModel messageModel) throws MessageNotFoundException {
         logger.info("(MessageController::update)   ====>    updating message with id " + id);
 
-        //MessageModel newMessage = new MessageModel(id, "Wartosc 2");
         MessageModel updatedMessage = messageService.update(id, messageModel);
-
+    
         logger.info("(MessageController::update)   ====>    new content of message with id " + id + " = " +
                 messageModel);
 
-        return updatedMessage;
+        return ResponseEntity.ok("Message Updated");
     }
 
     @GetMapping("/random/{count}")
     public List<MessageModel> readRandomMessages(@PathVariable Integer count) {
+        logger.info("(MessageController::update)   ====>    Get " + count + " random messages");
+
         List<MessageModel> list = messageService.readRandomMessages(count);
+
+        logger.info("(MessageController::update)   ====>    Random messages =  " + list);
+
         return list;
-        //TODO: loggers
+
     }
 
 
@@ -75,4 +87,6 @@ public class MessageController {
         logger.info("MessageController::readMessageById)    ====>   Returned message: " + messageModel);
         return messageModel;
     }
+
+
 }

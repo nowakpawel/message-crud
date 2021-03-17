@@ -1,10 +1,6 @@
 package pl.nowak.pawel.spring.message.crud.service;
 
-import org.aspectj.bridge.Message;
-import org.dom4j.rule.Mode;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import pl.nowak.pawel.spring.message.crud.exception.MessageException;
 import pl.nowak.pawel.spring.message.crud.exception.MessageNotFoundException;
 import pl.nowak.pawel.spring.message.crud.repository.MessageRepository;
 import pl.nowak.pawel.spring.message.crud.repository.entity.MessageEntity;
@@ -13,7 +9,7 @@ import pl.nowak.pawel.spring.message.crud.web.model.MessageModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Random;
 import java.util.logging.Logger;
 
 @Service
@@ -24,14 +20,8 @@ public class MessageService {
     private MessageRepository messageRepository;
 
     public MessageService(MessageMapper messageMapper, MessageRepository messageRepository) {
-        logger.info("(MessageService::constructor)   ====>   this.messageMapper = " + this.messageMapper);
-        logger.info("(MessageService::constructor)   ====>   this.messageRepository = " + this.messageRepository);
-
         this.messageMapper = messageMapper;
         this.messageRepository = messageRepository;
-
-        logger.info("(MessageService::constructor)   ====>   this.messageMapper = " + this.messageMapper);
-        logger.info("(MessageService::constructor)   ====>   this.messageRepository = " + this.messageRepository);
     }
 
     public List<MessageModel> list() {
@@ -87,9 +77,6 @@ public class MessageService {
         messageEntity.setContent(messageModel.getContent());
         messageRepository.save(messageEntity);
 
-        //TODO: create DAO layer
-
-
         MessageModel model = messageMapper.from(messageEntity);
         logger.info("(MessageService::update)    ====>    Updated message = " + model);
 
@@ -106,4 +93,20 @@ public class MessageService {
 
     }
 
+    public List<MessageModel> readRandomMessages(Integer count) {
+        Random random = new Random();
+        List<MessageModel> list = list();
+
+        if (list.size() < count) {
+            //throw new RandomMessageException()
+        }
+
+        List<MessageModel> randomList = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            int index = random.nextInt(count);
+            randomList.add(list.get(index));
+        }
+        return randomList;
+    }
 }
+

@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 public class MessageEntity {
@@ -14,6 +15,8 @@ public class MessageEntity {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
 //    @Column(name = "PR_KEY")
     private String id;
+
+    @NotBlank(message = "Content can not be empty")
     private String content;
 
     public MessageEntity() {

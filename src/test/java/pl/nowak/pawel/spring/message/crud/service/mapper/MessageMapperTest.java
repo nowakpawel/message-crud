@@ -9,16 +9,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class MessageMapperTest {
+
+    private static final String ID = "1";
+    private static final String MESSAGE_ENTITY = "Message Entity";
+    private static final String MESSAGE_MODEL = "Message Model";
+
     @Test
-    void model_to_entity() { //TODO: Refactor test method name
+    void givenModel_whenMapToEntity_thenCreateEntity() {
         //Given
         MessageMapper messageMapper = new MessageMapper();
         MessageModel messageModel = new MessageModel();
 
-        //TODO: Refactor - Autowired
 
-        messageModel.setId("1");
-        messageModel.setContent("Message Entity");
+
+        messageModel.setId(ID);
+        messageModel.setContent(MESSAGE_ENTITY);
 
         //When
         MessageEntity messageEntity = messageMapper.from(messageModel);
@@ -26,21 +31,19 @@ class MessageMapperTest {
         //Then
         assertAll(
                 () -> assertNotNull(messageEntity, "messageEntity is null!"),
-                () -> assertEquals(messageEntity.getId(), "1", "messageEntity.Id is not 1!"),
-                () -> assertEquals(messageEntity.getContent(), "Message Entity", "messageEntity.Content is not 'Message Entity'!")
+                () -> assertEquals(messageEntity.getId(), ID, "messageEntity.Id is not 1!"),
+                () -> assertEquals(messageEntity.getContent(), MESSAGE_ENTITY, "messageEntity.Content is not 'Message Entity'!")
         );
     }
 
     @Test
-    void entity_to_model() { //TODO: Refactor test method name
+    public void givenEntity_whenMapToModel_thenCreateModel() {
         //Given
         MessageMapper messageMapper = new MessageMapper();
         MessageEntity messageEntity = new MessageEntity();
 
-        //TODO: Refactor - Autowired
-
-        messageEntity.setId("1");
-        messageEntity.setContent("Message Model");
+        messageEntity.setId(ID);
+        messageEntity.setContent(MESSAGE_MODEL);
 
         //When
         MessageModel messageModel = messageMapper.from(messageEntity);
@@ -48,8 +51,8 @@ class MessageMapperTest {
         //Then
         assertAll(
                 () -> assertNotNull(messageModel, "messageModel is null!"),
-                () -> assertEquals(messageModel.getId(), "1", "MessageModel.Id is not !!"),
-                () -> assertEquals(messageModel.getContent(), "Message Model", "MessageModel.Content is not 'Message Model'!")
+                () -> assertEquals(messageModel.getId(), ID, "MessageModel.Id is not !!"),
+                () -> assertEquals(messageModel.getContent(), MESSAGE_MODEL, "MessageModel.Content is not 'Message Model'!")
         );
     }
 }
